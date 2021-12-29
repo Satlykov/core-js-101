@@ -7,7 +7,6 @@
  *                                                                                           *
  ******************************************************************************************* */
 
-
 /**
  * Returns an area of a rectangle given by width and height.
  *
@@ -22,7 +21,6 @@
 function getRectangleArea(width, height) {
   return width * height;
 }
-
 
 /**
  * Returns a circumference of circle given by radius.
@@ -90,7 +88,6 @@ function getLinearEquationRoot(a, b) {
   return (b * -1) / a;
 }
 
-
 /**
  * Returns an angle (in radians) between two vectors given by xi and yi,
  * coordinates in Cartesian plane.
@@ -135,7 +132,7 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
  *     0     => 0
  */
 function getLastDigit(value) {
-  return +(`${value}`.split('')[`${value}`.length - 1]);
+  return +`${value}`.split('')[`${value}`.length - 1];
 }
 
 /**
@@ -170,7 +167,6 @@ function getParallelepipedDiagonal(a, b, c) {
   return (a ** 2 + b ** 2 + c ** 2) ** 0.5;
 }
 
-
 /**
  * Returns the number rounded to specified power of 10.
  *
@@ -189,18 +185,7 @@ function getParallelepipedDiagonal(a, b, c) {
  *   1678, 3  => 2000
  */
 function roundToPowerOfTen(num, pow) {
-  const arr = String(num).split('').map((el) => +el);
-
-  if (pow !== 0) {
-    if (arr[arr.length - 1 - pow] >= 5) {
-      arr[arr.length - pow - 1] += 1;
-    }
-    for (let i = (arr.length - pow); i < arr.length; i += 1) {
-      arr[i] = 0;
-    }
-  }
-
-  return +arr.join('');
+  return (num / 1000).toFixed(3 - pow) * 1000;
 }
 
 /**
@@ -220,8 +205,15 @@ function roundToPowerOfTen(num, pow) {
  *   16 => false
  *   17 => true
  */
-function isPrime(/* n */) {
-  throw new Error('Not implemented');
+function isPrime(n) {
+  let flag = true;
+  for (let i = 2; i < n; i += 1) {
+    if (n % i === 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
 }
 
 /**
@@ -239,8 +231,12 @@ function isPrime(/* n */) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  let result = def;
+  if (Number.isNaN(+value) === false) {
+    result = +value;
+  }
+  return result;
 }
 
 module.exports = {
