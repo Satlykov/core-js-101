@@ -5,7 +5,6 @@
  *                                                                                                *
  ************************************************************************************************ */
 
-
 /**
  * Return Promise object that is resolved with string value === 'Hooray!!! She said "Yes"!',
  * if boolean value === true is passed, resolved with string value === 'Oh no, she said "No".',
@@ -28,10 +27,31 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
-}
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((resolve, reject) => {
+    let answer = '';
 
+    if (typeof isPositiveAnswer !== 'boolean') {
+      answer = 'Wrong parameter is passed! Ask her again.';
+      reject(new Error(answer));
+    }
+
+    switch (isPositiveAnswer) {
+      case true:
+        answer = 'Hooray!!! She said "Yes"!';
+        break;
+
+      case false:
+        answer = 'Oh no, she said "No".';
+        break;
+
+      default:
+        break;
+    }
+
+    resolve(answer);
+  });
+}
 
 /**
  * Return Promise object that should be resolved with array containing plain values.
@@ -48,8 +68,8 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array).then();
 }
 
 /**
@@ -71,8 +91,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array).then();
 }
 
 /**
