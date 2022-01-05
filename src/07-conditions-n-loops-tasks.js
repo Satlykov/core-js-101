@@ -297,7 +297,7 @@ function isCreditCardNumber(ccn) {
       .map((el) => +el)
       .map((el, i) => {
         if ((i + 1) % 2 !== 0) {
-          if ((el * 2) > 9) {
+          if (el * 2 > 9) {
             return el * 2 - 9;
           }
           return el * 2;
@@ -311,7 +311,7 @@ function isCreditCardNumber(ccn) {
       .map((el) => +el)
       .map((el, i) => {
         if ((i + 1) % 2 === 0) {
-          if ((el * 2) > 9) {
+          if (el * 2 > 9) {
             return el * 2 - 9;
           }
           return el * 2;
@@ -321,7 +321,7 @@ function isCreditCardNumber(ccn) {
       .reduce((suma, current) => suma + current, 0);
   }
 
-  return ((sum % 10) === 0);
+  return sum % 10 === 0;
 }
 
 /**
@@ -339,7 +339,11 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-  const result = num.toString().split('').map((el) => +el).reduce((sum, current) => sum + current, 0);
+  const result = num
+    .toString()
+    .split('')
+    .map((el) => +el)
+    .reduce((sum, current) => sum + current, 0);
   if (result > 9) {
     return getDigitalRoot(result);
   }
@@ -367,8 +371,31 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  if (str.length === 0) {
+    return true;
+  }
+  const leftParentheses = ['{', '[', '(', '<'];
+  const rightParentheses = ['}', ']', ')', '>'];
+
+  const arr = [];
+  str.split('').map((el) => {
+    if (leftParentheses.indexOf(el) !== -1) {
+      arr.push(el);
+    }
+    if (rightParentheses.indexOf(el) !== -1) {
+      if (
+        rightParentheses.indexOf(el)
+        === leftParentheses.indexOf(arr[arr.length - 1])
+      ) {
+        arr.pop();
+      } else {
+        arr.push(el);
+      }
+    }
+    return el;
+  });
+  return arr.length === 0;
 }
 
 /**
@@ -391,8 +418,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return +num.toString(n);
 }
 
 /**
@@ -407,8 +434,25 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = ['/'];
+  pathes.map((el) => {
+    if (el[0] !== '/') {
+      arr.pop();
+    }
+    return el;
+  });
+  if (arr.length === 0) return '';
+  const multiPath = pathes.map((el) => el.split('/'));
+  for (let i = 1; i < multiPath[0].length; i += 1) {
+    const set = [];
+    multiPath.map((el) => set.push(el[i]));
+    if (new Set(set).size === 1) {
+      arr.push(set[0]);
+      arr.push('/');
+    }
+  }
+  return arr.join('');
 }
 
 /**
@@ -429,8 +473,22 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const rowsA = m1.length;
+  const colsA = m1[0].length;
+  const rowsB = m2.length;
+  const colsB = m2[0].length;
+  const C = [];
+  if (colsA !== rowsB) return false;
+  for (let i = 0; i < rowsA; i += 1) C[i] = [];
+  for (let k = 0; k < colsB; k += 1) {
+    for (let i = 0; i < rowsA; i += 1) {
+      let t = 0;
+      for (let j = 0; j < rowsB; j += 1) t += m1[i][j] * m2[j][k];
+      C[i][k] = t;
+    }
+  }
+  return C;
 }
 
 /**
@@ -463,8 +521,46 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let answer;
+  for (let i = 0; i < position.length; i += 1) {
+    const arrX = position[i].filter((el) => el === 'X');
+    const arr0 = position[i].filter((el) => el === '0');
+    if (arrX.length === 3) {
+      answer = 'X';
+    }
+    if (arr0.length === 3) {
+      answer = '0';
+    }
+  }
+  for (let i = 0; i < position.length; i += 1) {
+    const arrX = [];
+    const arr0 = [];
+    position.map((el) => {
+      if (el[i] === 'X') arrX.push(el[i]);
+      if (el[i] === '0') arr0.push(el[i]);
+      return el;
+    });
+    if (arrX.length === 3) {
+      answer = 'X';
+    }
+    if (arr0.length === 3) {
+      answer = '0';
+    }
+  }
+  if (position[0][0] === 'X' && position[1][1] === 'X' && position[2][2] === 'X') {
+    answer = 'X';
+  }
+  if (position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X') {
+    answer = 'X';
+  }
+  if (position[0][0] === '0' && position[1][1] === '0' && position[2][2] === '0') {
+    answer = '0';
+  }
+  if (position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0') {
+    answer = '0';
+  }
+  return answer;
 }
 
 module.exports = {
