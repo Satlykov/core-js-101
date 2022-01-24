@@ -167,14 +167,11 @@ function doRectanglesOverlap(rect1, rect2) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
-  /*   return !(
-    (circle.center.x + circle.radius) < point.x
-    || (circle.center.x - circle.radius) > point.x
-    || (circle.center.y + circle.radius) < point.y
-    || (circle.center.y - circle.radius) > point.y
-  ); */
+function isInsideCircle(circle, point) {
+  return (
+    (point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2
+    < circle.radius ** 2
+  );
 }
 
 /**
@@ -548,16 +545,32 @@ function evaluateTicTacToePosition(position) {
       answer = '0';
     }
   }
-  if (position[0][0] === 'X' && position[1][1] === 'X' && position[2][2] === 'X') {
+  if (
+    position[0][0] === 'X'
+    && position[1][1] === 'X'
+    && position[2][2] === 'X'
+  ) {
     answer = 'X';
   }
-  if (position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X') {
+  if (
+    position[0][2] === 'X'
+    && position[1][1] === 'X'
+    && position[2][0] === 'X'
+  ) {
     answer = 'X';
   }
-  if (position[0][0] === '0' && position[1][1] === '0' && position[2][2] === '0') {
+  if (
+    position[0][0] === '0'
+    && position[1][1] === '0'
+    && position[2][2] === '0'
+  ) {
     answer = '0';
   }
-  if (position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0') {
+  if (
+    position[0][2] === '0'
+    && position[1][1] === '0'
+    && position[2][0] === '0'
+  ) {
     answer = '0';
   }
   return answer;
