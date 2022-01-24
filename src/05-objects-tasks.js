@@ -115,70 +115,35 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
-  element_id: '',
-  elements_classes: [],
-  element_element: '',
-  element_attr: '',
-  element_pseudoClasses: [],
-  element_pseudoElement: '',
-  elements_combine: '',
-
   element(/* value */) {
     throw new Error('Not implemented');
-    /*     this.element_element = value;
-    return this; */
   },
 
   id(/* value */) {
     throw new Error('Not implemented');
-    /*     this.element_id = `#${value}`;
-    return this; */
   },
 
   class(/* value */) {
     throw new Error('Not implemented');
-    /*     this.elements_classes.push(`.${value}`);
-    return this; */
   },
 
   attr(/* value */) {
     throw new Error('Not implemented');
-    /*     this.element_attr = `[${value}]`;
-    return this; */
   },
 
   pseudoClass(/* value */) {
     throw new Error('Not implemented');
-    /*     this.element_pseudoClasses.push(`:${value}`);
-    return this; */
   },
 
   pseudoElement(/* value */) {
     throw new Error('Not implemented');
-    /*     this.element_pseudoElement = `::${value}`;
-    return this; */
   },
 
   combine(/* selector1, combinator, selector2 */) {
     throw new Error('Not implemented');
-    /*     this.elements_combine = `${selector1} ${combinator} ${selector2}`;
-    return this; */
   },
   stringify() {
     throw new Error('Not implemented');
-    /*     const str = `${this.element_element}${
-      this.element_id
-    }${this.elements_classes.join('')}${this.element_attr}${
-      this.element_pseudoClasses.join('')
-    }${this.element_pseudoElement}`;
-
-    this.element_id = '';
-    this.elements_classes = [];
-    this.element_element = '';
-    this.element_attr = '';
-    this.element_pseudoClasses = [];
-    this.element_pseudoElement = '';
-    return str; */
   },
 };
 
